@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+</head>
+<body>
+    <div>
+        <div style="width: 40%;margin: 0 auto">
+            <h2>Escríbenos !!!</h2>
+            <div class="resultado" style="color:green;font-style: italic"></div>
+            <form id="formulario">
+                <div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>Nombre completo</label>
+                        <input id="nombre" type="text">
+                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>Asunto</label>
+                        <input id="asunto" type="text">
+                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: column;">
+                    <label>Mensaje</label>
+                    <textarea id="mensaje"></textarea>
+                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                </div>
+                <div>
+                    <button id="botton" type="submit">Envíar mensaje</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Obtener los valores de los campos
+            const nombre = document.getElementById('nombre').value;
+            const asunto = document.getElementById('asunto').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            // Expresión regular para caracteres alfabéticos
+            const regex = /^[a-zA-Z]+$/;
+
+            // Limpiar mensajes de error
+            document.querySelector('.errorNombre').textContent = '';
+            document.querySelector('.errorAsunto').textContent = '';
+            document.querySelector('.errorMensaje').textContent = '';
+
+            let isValid = true;
+
+            // Validación del nombre
+            if (nombre.trim() === '') {
+                document.querySelector('.errorNombre').textContent = 'El campo nombre no puede estar vacío.';
+                isValid = false;
+            } else if (!regex.test(nombre)) {
+                document.querySelector('.errorNombre').textContent = 'El nombre solo puede contener caracteres alfabéticos (a-z, A-Z).';
+                isValid = false;
+            }
+
+            // Validación del asunto
+            if (asunto.trim() === '') {
+                document.querySelector('.errorAsunto').textContent = 'El campo asunto no puede estar vacío.';
+                isValid = false;
+            } else if (!regex.test(asunto)) {
+                document.querySelector('.errorAsunto').textContent = 'El asunto solo puede contener caracteres alfabéticos (a-z, A-Z).';
+                isValid = false;
+            }
+
+            // Validación del mensaje
+            if (mensaje.trim() === '') {
+                document.querySelector('.errorMensaje').textContent = 'El campo mensaje no puede estar vacío.';
+                isValid = false;
+            } else if (!regex.test(mensaje.replace(/\s+/g, ''))) { // Eliminar espacios para validar caracteres
+                document.querySelector('.errorMensaje').textContent = 'El mensaje solo puede contener caracteres alfabéticos (a-z, A-Z).';
+                isValid = false;
+            }
+
+            // Mostrar mensaje de éxito si todo es válido
+            if (isValid) {
+                document.querySelector('.resultado').textContent = 'Formulario enviado exitosamente!';
+            }
+        });
+    </script>
+</body>
+</html>
